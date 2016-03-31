@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic Calculator</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+
+<body ng-app="calculator" ng-controller="calculatorController">
+<form>
+		<fieldset>
+            <legend>Basic Calculator</legend>
+            <table>
+            
+            	<colgroup>
+				    <col style="width: 50%" />
+				    <col style="width: 50%" />
+				</colgroup>
+				
+	            <tr>
+	                <th align="left"><label style="width: 100%">Enter First Number</label></th>
+	                <td><input type="number" style="width: 100%" name="fnum" id="fnum" ng-model="n1" required="required" title="Please enter a number" pattern="\d"/></td>
+	            </tr>
+	            <tr>
+	                <th align="left"><label text-align="left">Enter Second Number</label></th>
+	                <td><input type="number" style="width: 100%" name="snum" id="snum" ng-model="n2" required="required" title="Please enter a number" pattern="\d"/></td>
+	            </tr>
+	            <tr>
+	            	<td colspan="2">&nbsp;</td>
+	            </tr>   
+	            <tr>
+	            	<td><input style="width: 100%" type="submit" name="add" id="+" value="Add" ng-click="add()"></input></td>
+	            	<td><input style="width: 100%" type="submit" name="sub" id="-" value="Subtract" ng-click="sub()"></input></td>
+	            </tr>
+	            <tr>	
+	            	<td><input style="width: 100%" type="submit" name="mul" id="*" value="Multiply" ng-click="mul()"></input></td>
+	            	<td><input style="width: 100%" type="submit" name="div" id="/" value="Divide" ng-click="div()"></input></td>
+	            </tr>
+	            <tr>
+	            	<td colspan="2"><input type="reset" value="Reset" style="width:100%"></td>
+	            </tr>
+	            
+	            <tr>
+	            	<td colspan="2">&nbsp;</td>
+	            </tr>	
+	            
+	            <tr>
+	                <th align="left"><label style="width: 100%">Result</label></th>
+	                <td><input style="width: 100%;" name="result" id="ans" type="text" ng-model="result"/></td>
+	        	</tr>
+	            
+			</table>    
+		</fieldset>
+		
+		<script>
+			var app = angular.module('calculator', []);
+			app.controller('calculatorController', input);
+			
+			function input($scope, $http){
+
+				<%# Call add method%>
+				$scope.add = function(){
+				
+					$http({
+			        	method	: "POST",
+			        	url		: "/add",
+			        	data 	: {	
+			        				"fnum" : $scope.n1,
+			        				"snum" : $scope.n2
+			        			 }
+				    }).then(function(response) {
+				        $scope.result = response.data;
+				    }, function(response) {
+				    	
+				    	$scope.statuscode = response.status;
+				        $scope.statusText = response.statusText;
+				    });           
+				}
+				
+				<%# Call subtract method%>
+				$scope.sub = function(){
+					
+						$http({
+				        	method	: "POST",
+				        	url		: "/sub",
+				        	data 	: {	
+				        				"fnum" : $scope.n1,
+				        				"snum" : $scope.n2
+				        			 }
+					    }).then(function(response) {
+					        $scope.result = response.data;
+					    }, function(response) {
+					    	$scope.statuscode = response.status;
+					        $scope.statusText = response.statusText;
+					    });          
+					}
+				
+					<%# Call multiply method%>
+					$scope.mul = function(){
+					
+						$http({
+				        	method	: "POST",
+				        	url		: "/mul",
+				        	data 	: {	
+				        				"fnum" : $scope.n1,
+				        				"snum" : $scope.n2
+				        			 }
+					    }).then(function(response) {
+					        $scope.result = response.data;
+					    }, function(response) {
+					    	$scope.statuscode = response.status;
+					        $scope.statusText = response.statusText;
+					    });          
+					}
+					
+					<%# Call divide method%>
+					$scope.div = function(){
+					
+						$http({
+				        	method	: "POST",
+				        	url		: "/div",
+				        	data 	: {	
+				        				"fnum" : $scope.n1,
+				        				"snum" : $scope.n2
+				        			 }
+					    }).then(function(response) {
+					        $scope.result = response.data;
+					    }, function(response) {
+					    	$scope.statuscode = response.status;
+					        $scope.statusText = response.statusText;
+					    });          
+					}
+				
+			}
+		</script>
+</form>            
+
+</body>
+</html>
